@@ -14,6 +14,8 @@ import Suppliers from './components/Suppliers';
 import UserManagement from './components/UserManagement';
 import Cart from './components/Cart';
 import Login from './components/Login';
+import VideoGenerator from './components/VideoGenerator';
+import YukthitechVideoGenerator from './components/YukthitechVideoGenerator';
 import './App.css';
 
 function App() {
@@ -57,6 +59,8 @@ function App() {
                 <Route path="/suppliers" element={<Suppliers />} />
                 <Route path="/user-management" element={<UserManagement />} />
                 <Route path="/cart" element={<Cart />} />
+                <Route path="/video-generator" element={<VideoGenerator />} />
+                <Route path="/yukthitech-video" element={<YukthitechVideoGenerator />} />
               </Routes>
             </main>
           </div>

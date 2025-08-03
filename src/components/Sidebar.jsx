@@ -11,7 +11,9 @@ import {
   UserCog,
   Package2,
   Menu,
-  X
+  X,
+  Video,
+  Wand2
 } from 'lucide-react';
 
 const Sidebar = ({ isOpen, onToggle }) => {
@@ -24,6 +26,8 @@ const Sidebar = ({ isOpen, onToggle }) => {
     { icon: ShoppingCart, label: 'Carts', path: '/cart', badge: null },
     // { icon: Warehouse, label: 'Inventory', path: '/inventory', badge: '4' },
     { icon: Users, label: 'Customers', path: '/customers', badge: null },
+    { icon: Video, label: 'Video Generator', path: '/video-generator', badge: 'NEW' },
+    { icon: Wand2, label: 'Yukthitech Video', path: '/yukthitech-video', badge: 'AI' },
     // { icon: BarChart3, label: 'Analytics', path: '/analytics', badge: null },
     // { icon: Truck, label: 'Suppliers', path: '/suppliers', badge: null },
     // { icon: UserCog, label: 'User Management', path: '/user-management', badge: null },
