@@ -8,7 +8,8 @@ import {
   RefreshCw,
   ArrowUpRight,
   ArrowDownRight,
-  LayoutDashboard
+  LayoutDashboard,
+  Eye
 } from 'lucide-react';
 
 const Dashboard = () => {
@@ -41,7 +42,8 @@ const Dashboard = () => {
       change: '+20.1%',
       changeType: 'positive',
       icon: DollarSign,
-      color: 'bg-green-500'
+      gradient: 'from-emerald-500 to-teal-600',
+      bgGradient: 'from-emerald-50 to-teal-50'
     },
     {
       title: 'Total Orders',
@@ -49,7 +51,8 @@ const Dashboard = () => {
       change: '+180.1%',
       changeType: 'positive',
       icon: ShoppingCart,
-      color: 'bg-blue-500'
+      gradient: 'from-blue-500 to-indigo-600',
+      bgGradient: 'from-blue-50 to-indigo-50'
     },
     {
       title: 'Total Customers',
@@ -57,7 +60,8 @@ const Dashboard = () => {
       change: '+19%',
       changeType: 'positive',
       icon: Users,
-      color: 'bg-purple-500'
+      gradient: 'from-purple-500 to-pink-600',
+      bgGradient: 'from-purple-50 to-pink-50'
     },
     {
       title: 'Total Products',
@@ -65,7 +69,8 @@ const Dashboard = () => {
       change: '+12%',
       changeType: 'positive',
       icon: Package,
-      color: 'bg-orange-500'
+      gradient: 'from-orange-500 to-red-500',
+      bgGradient: 'from-orange-50 to-red-50'
     }
   ];
 
@@ -76,48 +81,61 @@ const Dashboard = () => {
     { id: 4, customer: 'Sarah Wilson', product: 'Garlic Pickle', amount: '₹200', status: 'Pending' }
   ];
 
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case 'Delivered':
+        return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-300';
+      case 'Processing':
+        return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300';
+      case 'Shipped':
+        return 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300';
+      default:
+        return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300';
+    }
+  };
+
   return (
-    <div className="p-4 sm:p-6 lg:p-8 space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 space-y-8 min-h-full">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Dashboard</h1>
-          <p className="text-gray-600 mt-1">Welcome back! Here's what's happening with your business.</p>
+        <div className="space-y-1">
+          <h1 className="text-3xl sm:text-4xl font-bold text-foreground">Dashboard</h1>
+          <p className="text-muted-foreground">Welcome back! Here's what's happening with your business.</p>
         </div>
         <button
           onClick={handleRefresh}
           disabled={loading}
-          className="flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-lg hover:from-orange-600 hover:to-red-600 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex items-center justify-center gap-2 px-6 py-3 gradient-primary text-white rounded-xl hover:shadow-lg hover:shadow-primary/25 hover:scale-[1.02] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          {loading ? 'Refreshing...' : 'Refresh'}
+          {loading ? 'Refreshing...' : 'Refresh Data'}
         </button>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
-          <div key={index} className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
+          <div key={index} className="group bg-card/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover:shadow-xl hover:shadow-primary/5 hover:scale-[1.02] transition-all duration-300 hover:border-primary/20">
             <div className="flex items-center justify-between">
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-gray-600 truncate">{stat.title}</p>
-                <p className="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">{stat.value}</p>
-                <div className="flex items-center mt-2">
+              <div className="flex-1 min-w-0 space-y-3">
+                <p className="text-sm font-medium text-muted-foreground truncate">{stat.title}</p>
+                <p className="text-3xl font-bold text-foreground">{stat.value}</p>
+                <div className="flex items-center">
                   {stat.changeType === 'positive' ? (
-                    <ArrowUpRight className="w-4 h-4 text-green-500" />
+                    <ArrowUpRight className="w-4 h-4 text-emerald-500" />
                   ) : (
                     <ArrowDownRight className="w-4 h-4 text-red-500" />
                   )}
-                  <span className={`text-sm font-medium ml-1 ${
-                    stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
+                  <span className={`text-sm font-semibold ml-1 ${
+                    stat.changeType === 'positive' ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-600 dark:text-red-400'
                   }`}>
                     {stat.change}
                   </span>
-                  <span className="text-sm text-gray-500 ml-1">from last month</span>
+                  <span className="text-sm text-muted-foreground ml-1">from last month</span>
                 </div>
               </div>
-              <div className={`p-3 rounded-lg ${stat.color}`}>
-                <stat.icon className="w-6 h-6 text-white" />
+              <div className={`p-4 rounded-2xl bg-gradient-to-br ${stat.gradient} shadow-lg group-hover:shadow-xl transition-all duration-300`}>
+                <stat.icon className="w-7 h-7 text-white" />
               </div>
             </div>
           </div>
@@ -125,44 +143,44 @@ const Dashboard = () => {
       </div>
 
       {/* Charts and Recent Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Revenue Chart */}
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Revenue Overview</h3>
-            <TrendingUp className="w-5 h-5 text-green-500" />
+        <div className="bg-card/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-foreground">Revenue Overview</h3>
+            <div className="p-2 bg-emerald-100 dark:bg-emerald-900/30 rounded-xl">
+              <TrendingUp className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
           </div>
-          <div className="h-64 flex items-center justify-center bg-gray-50 rounded-lg">
-            <div className="text-center">
-              <TrendingUp className="w-12 h-12 text-gray-400 mx-auto mb-2" />
-              <p className="text-gray-500">Chart will be displayed here</p>
+          <div className="h-64 flex items-center justify-center bg-muted/30 rounded-xl border border-border/30">
+            <div className="text-center space-y-3">
+              <div className="p-4 bg-primary/10 rounded-2xl w-fit mx-auto">
+                <TrendingUp className="w-12 h-12 text-primary mx-auto" />
+              </div>
+              <p className="text-muted-foreground font-medium">Revenue chart will be displayed here</p>
             </div>
           </div>
         </div>
 
         {/* Recent Orders */}
-        <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-lg font-semibold text-gray-900">Recent Orders</h3>
-            <button className="text-sm text-[#8B4513] hover:text-[#A0522D] font-medium">
+        <div className="bg-card/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover:shadow-lg transition-all duration-300">
+          <div className="flex items-center justify-between mb-6">
+            <h3 className="text-xl font-bold text-foreground">Recent Orders</h3>
+            <button className="flex items-center gap-2 text-sm text-primary hover:text-primary/80 font-semibold hover:scale-105 transition-all duration-200">
+              <Eye className="w-4 h-4" />
               View all
             </button>
           </div>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {recentOrders.map((order) => (
-              <div key={order.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{order.customer}</p>
-                  <p className="text-sm text-gray-500 truncate">{order.product}</p>
+              <div key={order.id} className="flex items-center justify-between p-4 bg-muted/30 rounded-xl border border-border/30 hover:bg-muted/50 hover:scale-[1.01] transition-all duration-200">
+                <div className="flex-1 min-w-0 space-y-1">
+                  <p className="text-sm font-semibold text-foreground truncate">{order.customer}</p>
+                  <p className="text-sm text-muted-foreground truncate">{order.product}</p>
                 </div>
                 <div className="flex items-center space-x-3 ml-4">
-                  <span className="text-sm font-medium text-gray-900">{order.amount}</span>
-                  <span className={`px-2 py-1 text-xs font-medium rounded-full ${
-                    order.status === 'Delivered' ? 'bg-green-100 text-green-800' :
-                    order.status === 'Processing' ? 'bg-yellow-100 text-yellow-800' :
-                    order.status === 'Shipped' ? 'bg-blue-100 text-blue-800' :
-                    'bg-gray-100 text-gray-800'
-                  }`}>
+                  <span className="text-sm font-bold text-foreground">{order.amount}</span>
+                  <span className={`px-3 py-1.5 text-xs font-semibold rounded-full ${getStatusStyle(order.status)}`}>
                     {order.status}
                   </span>
                 </div>
@@ -173,24 +191,24 @@ const Dashboard = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="bg-white p-4 sm:p-6 rounded-lg shadow-sm border">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
+      <div className="bg-card/50 backdrop-blur-sm p-6 rounded-2xl border border-border/50 hover:shadow-lg transition-all duration-300">
+        <h3 className="text-xl font-bold text-foreground mb-6">Quick Actions</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-colors">
-            <Package className="w-6 h-6 mr-2" />
-            <span className="font-medium">Add Product</span>
+          <button className="group flex items-center justify-center p-6 border-2 border-dashed border-border hover:border-primary rounded-2xl hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]">
+            <Package className="w-6 h-6 mr-3 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">Add Product</span>
           </button>
-          <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-colors">
-            <Users className="w-6 h-6 mr-2" />
-            <span className="font-medium">Add Customer</span>
+          <button className="group flex items-center justify-center p-6 border-2 border-dashed border-border hover:border-primary rounded-2xl hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]">
+            <Users className="w-6 h-6 mr-3 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">Add Customer</span>
           </button>
-          <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-colors">
-            <ShoppingCart className="w-6 h-6 mr-2" />
-            <span className="font-medium">View Orders</span>
+          <button className="group flex items-center justify-center p-6 border-2 border-dashed border-border hover:border-primary rounded-2xl hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]">
+            <ShoppingCart className="w-6 h-6 mr-3 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">View Orders</span>
           </button>
-          <button className="flex items-center justify-center p-4 border-2 border-dashed border-gray-300 rounded-lg hover:border-[#8B4513] hover:bg-[#8B4513] hover:text-white transition-colors">
-            <TrendingUp className="w-6 h-6 mr-2" />
-            <span className="font-medium">Analytics</span>
+          <button className="group flex items-center justify-center p-6 border-2 border-dashed border-border hover:border-primary rounded-2xl hover:bg-primary/5 transition-all duration-300 hover:scale-[1.02]">
+            <TrendingUp className="w-6 h-6 mr-3 text-muted-foreground group-hover:text-primary transition-colors" />
+            <span className="font-semibold text-foreground group-hover:text-primary transition-colors">Analytics</span>
           </button>
         </div>
       </div>

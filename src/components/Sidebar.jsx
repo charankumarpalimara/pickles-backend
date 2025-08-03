@@ -34,52 +34,50 @@ const Sidebar = ({ isOpen, onToggle }) => {
       {/* Mobile overlay */}
       {isOpen && (
         <div 
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
           onClick={onToggle}
         />
       )}
       
       {/* Sidebar */}
       <div className={`
-        fixed top-0 left-0 h-full bg-white border-r border-gray-200 z-50 transition-transform duration-300 ease-in-out
-        lg:relative lg:translate-x-0 lg:z-auto
+        fixed top-0 left-0 h-full bg-sidebar/95 backdrop-blur-xl border-r border-sidebar-border z-50 transition-all duration-300 ease-in-out
+        lg:relative lg:translate-x-0 lg:z-auto lg:bg-sidebar
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-        w-64 flex-shrink-0
+        w-64 flex-shrink-0 shadow-xl lg:shadow-none
       `}>
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center justify-between p-6 border-b border-sidebar-border/50">
           <div className="flex items-center space-x-3">
-            <div className="bg-gradient-to-r from-orange-500 to-red-500 p-2 rounded-lg">
+            <div className="gradient-primary p-2.5 rounded-xl shadow-lg">
               <Package2 className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-lg font-bold text-gray-900">Monika Pickle</h1>
-              <p className="text-xs text-gray-500">Dashboard</p>
+              <h1 className="text-lg font-bold text-sidebar-foreground">Monika Pickle</h1>
+              <p className="text-xs text-sidebar-foreground/60">Admin Dashboard</p>
             </div>
           </div>
           <button
             onClick={onToggle}
-            className="lg:hidden p-2 hover:bg-gray-100 rounded-lg transition-colors"
+            className="lg:hidden p-2 hover:bg-sidebar-accent rounded-lg transition-colors"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5 text-sidebar-foreground/60" />
           </button>
         </div>
 
- 
-
         {/* Navigation */}
         <nav className="flex-1 overflow-y-auto p-4">
-          <ul className="space-y-2">
+          <ul className="space-y-1">
             {menuItems.map((item) => (
               <li key={item.path}>
                 <NavLink
                   to={item.path}
                   onClick={onToggle}
                   className={({ isActive }) => `
-                    flex items-center justify-between px-3 py-2.5 rounded-lg transition-colors
+                    flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200
                     ${isActive 
-                      ? 'bg-gradient-to-r from-orange-500 to-red-500 text-white shadow-sm' 
-                      : 'text-gray-700 hover:bg-orange-50 hover:text-orange-600'
+                      ? 'gradient-primary text-white shadow-lg shadow-primary/25 scale-[1.02]' 
+                      : 'text-sidebar-foreground/80 hover:bg-sidebar-accent hover:text-sidebar-foreground hover:scale-[1.01] hover:shadow-sm'
                     }
                   `}
                 >
@@ -88,7 +86,7 @@ const Sidebar = ({ isOpen, onToggle }) => {
                     <span className="font-medium truncate">{item.label}</span>
                   </div>
                   {item.badge && (
-                    <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full min-w-[20px] text-center">
+                    <span className="gradient-accent text-white text-xs px-2.5 py-1 rounded-full min-w-[20px] text-center font-semibold shadow-sm">
                       {item.badge}
                     </span>
                   )}
@@ -96,35 +94,14 @@ const Sidebar = ({ isOpen, onToggle }) => {
               </li>
             ))}
           </ul>
-                   {/* User Info */}
-         {/* <div className="p-4 border-b border-gray-200">
-           <div className="flex items-center space-x-3">
-             <div className="w-10 h-10 bg-[#8B4513] rounded-full flex items-center justify-center">
-               <span className="text-white font-semibold text-sm">
-                 {user.first_name ? user.first_name.charAt(0).toUpperCase() : 'A'}
-               </span>
-             </div>
-             <div className="flex-1 min-w-0">
-               <p className="text-sm font-medium text-gray-900 truncate">
-                 {user.first_name && user.last_name 
-                   ? `${user.first_name} ${user.last_name}` 
-                   : user.username || 'Admin User'
-                 }
-               </p>
-               <p className="text-xs text-gray-500 truncate">
-                 {user.email || 'admin@pickles.com'}
-               </p>
-             </div>
-           </div>
-         </div> */}
         </nav>
 
-        {/* Footer */}
-        {/* <div className="p-4 border-t border-gray-200">
-          <div className="text-xs text-gray-500 text-center">
+        {/* Footer with subtle branding */}
+        <div className="p-4 border-t border-sidebar-border/30">
+          <div className="text-xs text-sidebar-foreground/40 text-center font-medium">
             © 2025 Pickles Admin
           </div>
-        </div> */}
+        </div>
       </div>
     </>
   );
