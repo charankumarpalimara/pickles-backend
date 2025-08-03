@@ -39,11 +39,11 @@ function App() {
       {!user ? (
         <Login onLogin={handleLogin} />
       ) : (
-        <div className="flex h-screen bg-gray-50">
+        <div className="flex h-screen bg-background">
           <Sidebar isOpen={isSidebarOpen} onToggle={toggleSidebar} />
           <div className="flex-1 flex flex-col overflow-hidden">
             <Header user={user} onLogout={handleLogout} onToggleSidebar={toggleSidebar} />
-            <main className="flex-1 overflow-y-auto bg-gray-50">
+            <main className="flex-1 overflow-y-auto bg-background">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
